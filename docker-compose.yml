@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+
+    thunes:
+        build: 
+            context: ./
+            dockerfile: thunes.dockerfile
+        ports: 
+            - "8099:8099"
+        depends_on: 
+            - mysql
+        links: 
+            - mysql
+    
+    mysql:
+        build: 
+            context: ./
+            dockerfile: mysql.dockerfile
+        ports: 
+            - "3306:3306"
+            - "33060:33060"
+        expose: 
+            - 3306
+            - 33060
+        volumes: 
+            - type: bind
+              source: ./mysql
+              target: /var/lib/mysql
+        user: root
+        
